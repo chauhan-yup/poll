@@ -1,0 +1,320 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Demo API Documentation",
+        "version": "0.1"
+    },
+    "servers": [
+        {
+            "url": "http://poll.local/api"
+        }
+    ],
+    "paths": {
+        "/poll/{type}": {
+            "get": {
+                "tags": [
+                    "Poll"
+                ],
+                "summary": "Options in active, answered",
+                "description": "User Details",
+                "operationId": "active-poll",
+                "parameters": [
+                    {
+                        "parameter": "type",
+                        "name": "type",
+                        "in": "path"
+                    }
+                ],
+                "responses": {
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "201": {
+                        "description": "Active Poll listing",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/response"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "passport": []
+                    }
+                ]
+            }
+        },
+        "/answer-poll/{poll}/{pollAnswer}": {
+            "get": {
+                "tags": [
+                    "Poll"
+                ],
+                "summary": "poll answer api",
+                "description": "Poll Answer details",
+                "operationId": "answer poll",
+                "parameters": [
+                    {
+                        "parameter": "poll",
+                        "name": "poll",
+                        "in": "path",
+                        "description": "poll_id",
+                        "required": true
+                    },
+                    {
+                        "parameter": "pollAnswer",
+                        "name": "pollAnswer",
+                        "in": "path",
+                        "description": "poll_answer_id",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "201": {
+                        "description": "Active Poll listing",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/response"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "passport": []
+                    }
+                ]
+            }
+        },
+        "/login": {
+            "post": {
+                "tags": [
+                    "Projects"
+                ],
+                "summary": "Store new project",
+                "description": "Returns project data",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/LoginRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "201": {
+                        "description": "Successful created",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/response"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/user": {
+            "get": {
+                "tags": [
+                    "Projects"
+                ],
+                "summary": "Details of user",
+                "description": "User Details",
+                "operationId": "user",
+                "responses": {
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "201": {
+                        "description": "User Detail successfull",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/response"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "passport": []
+                    }
+                ]
+            }
+        },
+        "/register": {
+            "post": {
+                "tags": [
+                    "Projects"
+                ],
+                "summary": "Registration of user",
+                "description": "Registration",
+                "operationId": "App\\Http\\Controllers\\Auth\\RegisterController::create",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/RegistrationModel"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "201": {
+                        "description": "Successful created",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/response"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "response": {
+                "title": "Response format",
+                "description": "Response format of api",
+                "required": [
+                    "status",
+                    "message"
+                ],
+                "properties": {
+                    "status": {
+                        "description": "Status",
+                        "format": "boolean",
+                        "example": true
+                    },
+                    "message": {
+                        "description": "Message",
+                        "type": "string",
+                        "format": "string",
+                        "example": "Response successfull"
+                    },
+                    "code": {
+                        "description": "code",
+                        "type": "integer",
+                        "format": "int64",
+                        "example": 200
+                    },
+                    "data": {
+                        "description": "Data",
+                        "type": "object"
+                    }
+                },
+                "type": "object"
+            },
+            "LoginRequest": {
+                "title": "Login Request",
+                "description": "Email and passwords are required for login",
+                "required": [
+                    "email",
+                    "password"
+                ],
+                "properties": {
+                    "email": {
+                        "description": "Email",
+                        "format": "string",
+                        "example": "test"
+                    },
+                    "password": {
+                        "description": "Password",
+                        "format": "password",
+                        "example": "*****"
+                    }
+                },
+                "type": "object"
+            },
+            "RegistrationModel": {
+                "title": "User Registration Model",
+                "description": "User Registration Model",
+                "required": [
+                    "name",
+                    "email",
+                    "password",
+                    "password_confirmation"
+                ],
+                "properties": {
+                    "name": {
+                        "description": "Name",
+                        "format": "string",
+                        "example": "Pratik"
+                    },
+                    "email": {
+                        "description": "Email",
+                        "format": "string",
+                        "example": "pratik.darji@rishabhsoft.com"
+                    },
+                    "password": {
+                        "description": "Password",
+                        "format": "password",
+                        "example": "Asdf@123"
+                    },
+                    "password_confirmation": {
+                        "description": "Password Confirm",
+                        "format": "password",
+                        "example": "Asdf@123"
+                    }
+                },
+                "type": "object"
+            }
+        },
+        "securitySchemes": {
+            "passport": {
+                "type": "oauth2",
+                "description": "Laravel passport oauth2 security.",
+                "in": "header",
+                "scheme": "http",
+                "flows": {
+                    "password": {
+                        "authorizationUrl": "http://poll.local/oauth/authorize",
+                        "tokenUrl": "http://poll.local/oauth/token",
+                        "refreshUrl": "http://poll.local/token/refresh",
+                        "scopes": []
+                    }
+                }
+            }
+        }
+    },
+    "security": [
+        []
+    ]
+}
